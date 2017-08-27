@@ -3,8 +3,14 @@ using System.Collections;
 
 public class TimeManager : MonoBehaviour 
 {
-    private bool _timerActive = false;
     private int _timeInSecondsSinceGameStart;
+	public int TimeInSecondsSinceStartGame
+	{
+		get 
+		{
+			return _timeInSecondsSinceGameStart;
+		}
+	}
 
     private int _minutes;
     public int Minutes
@@ -23,6 +29,8 @@ public class TimeManager : MonoBehaviour
             return _seconds;
         }
     }
+
+	private bool _timerActive = false;
 
     void Start()
     {

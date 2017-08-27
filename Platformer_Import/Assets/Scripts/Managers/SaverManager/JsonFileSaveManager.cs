@@ -2,35 +2,43 @@
 using System.Collections;
 using System.IO;
 
-public class JsonFileSaveManager<T>: MonoBehaviour 
+struct SaveGameData
 {
-    public T saveObject;
-    string fileDataPath=string.Empty;
+	public int gameCount;
+	public int score;
+	public int timeInSeconds;
+
+	public void SetSaveGameData(int tekGameCount)
+	{
+		gameCount = tekGameCount;
+		score = GameObject.FindObjectOfType<ScoreManager> ().TekScore;
+		timeInSeconds = GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame;
+	}
+}
+
+public class JsonFileSaveManager: MonoBehaviour 
+{
+    private string _fileDataPath=string.Empty;
+	private SaveGameData _tekSaveGameData;
 
 	void Start () 
     {
-        fileDataPath = Application.streamingAssetsPath+"saveJSON.json"; 
-        	
+        _fileDataPath = Application.streamingAssetsPath+"SaveJSON.json";  	
     }
 
-    void putToFile()
-    {
-        //переводим в json
-        string bufString = JsonUtility.ToJson(saveObject);  
-        File.WriteAllText(fileDataPath,bufString);
-    }
+	public void SaveProgress()
+	{
+		if (File.Exists(_fileDataPath)) 
+		{
+			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _tekSaveGameData);
 
-    void getFromFile(ref T newObj)
-    {
-        if (File.Exists(fileDataPath))
-        {
-            string bufString = File.ReadAllText(fileDataPath);
+			_tekSaveGameData.SetSaveGameData (++_tekSaveGameData.gameCount);
+		} 
+		else 
+		{
+			_tekSaveGameData.SetSaveGameData (1);
+		}
 
-            JsonUtility.FromJsonOverwrite(bufString, newObj); 
-        }
-        else
-        {
-            Debug.Log("File dont exist");
-        }
-    }
+		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _tekSaveGameData);
+	}
 }

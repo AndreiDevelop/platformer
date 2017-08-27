@@ -25,7 +25,7 @@ public class GameProcessManager : MonoBehaviour
     private PopUpAnimation _popAnim;
     private HeroMove _hero;
 	private GlobalController _moveControll;
-
+	private JsonFileSaveManager _saveInFileManager;
 	// Use this for initialization
 	void Start () 
     {
@@ -42,6 +42,8 @@ public class GameProcessManager : MonoBehaviour
 
         //получаем менеджер счетчика
         _scoreManager = GameObject.FindObjectOfType<ScoreManager>();
+
+		_saveInFileManager = GameObject.FindObjectOfType<JsonFileSaveManager> ();
 	}
 	
 	// Update is called once per frame
@@ -97,6 +99,7 @@ public class GameProcessManager : MonoBehaviour
 
     public void GameOver()
     {
+		_saveInFileManager.SaveProgress ();
         StopTime();
         _moveControll.enabled = false;
         _popAnim.ShowGameOverPopUp();

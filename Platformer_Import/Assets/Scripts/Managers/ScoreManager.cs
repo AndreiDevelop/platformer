@@ -21,9 +21,4 @@ public class ScoreManager : MonoBehaviour
     {
         _tekScore = 0;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

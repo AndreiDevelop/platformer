@@ -4,7 +4,6 @@ using TMPro;
 
 public class ScoreGameUI : MonoBehaviour 
 {
-    enum Score{PlatformNormal=10,PlatformOnceJump=20,PlatformTwoJump=30}
     private TextMeshProUGUI _tekTMP;
 
     private ScoreManager _scoreManager;
