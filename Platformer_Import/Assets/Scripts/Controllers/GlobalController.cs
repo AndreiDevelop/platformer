@@ -4,8 +4,7 @@ using System.Collections;
 public class GlobalController : MonoBehaviour{
 
     private IControllerMove _movecontroller;
-    private GameObject _sensorButtons;
-	// Use this for initialization
+
     #region singleton
 
     private static GlobalController _instance;
@@ -16,10 +15,6 @@ public class GlobalController : MonoBehaviour{
             _instance = this;
         else if (_instance != this)
             Destroy(gameObject);
-
-       // DontDestroyOnLoad(gameObject);
-
-        _sensorButtons = GameObject.Find("SensorButtons");
 
         #if UNITY_ANDROID || UNITY_IOS
             _movecontroller = GameObject.FindObjectOfType<SensorController>(); ; 

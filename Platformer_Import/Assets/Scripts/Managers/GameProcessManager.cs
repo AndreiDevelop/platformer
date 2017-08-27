@@ -3,12 +3,28 @@ using System.Collections;
 
 public class GameProcessManager : MonoBehaviour 
 {
+
+	private TimeManager _timeManager;
+	public TimeManager timeManager
+	{
+		get
+		{
+			return _timeManager;
+		}
+	}
+
+	private ScoreManager _scoreManager;
+	public ScoreManager scoreManager
+	{
+		get 
+		{
+			return _scoreManager;
+		}
+	}
+
     private PopUpAnimation _popAnim;
     private HeroMove _hero;
-
-    private TimeManager _timeManager;
-    private ScoreManager _scoreManager;
-    private GlobalController _moveControll;
+	private GlobalController _moveControll;
 
 	// Use this for initialization
 	void Start () 
