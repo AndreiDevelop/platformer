@@ -2,10 +2,19 @@
 using System.Collections;
 using System.IO;
 
+using System;
+using System.Runtime.Serialization;
+
+[DataContract]
 struct SaveGameData
 {
+	[DataMemberAttribute]
 	public int gameCount;
+
+	[DataMemberAttribute]
 	public int score;
+
+	[DataMemberAttribute]
 	public int timeInSeconds;
 
 	public void SetSaveGameData(int tekGameCount)
@@ -19,7 +28,7 @@ struct SaveGameData
 public class JsonFileSaveManager: MonoBehaviour 
 {
     private string _fileDataPath=string.Empty;
-	private SaveGameData _tekSaveGameData;
+	private SaveGameData []_tekSaveGameData;
 
 	void Start () 
     {
@@ -32,11 +41,11 @@ public class JsonFileSaveManager: MonoBehaviour
 		{
 			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _tekSaveGameData);
 
-			_tekSaveGameData.SetSaveGameData (++_tekSaveGameData.gameCount);
+			_tekSaveGameData[_tekSaveGameData.Length-1].SetSaveGameData (++_tekSaveGameData[_tekSaveGameData.Length-1].gameCount);
 		} 
 		else 
 		{
-			_tekSaveGameData.SetSaveGameData (1);
+			_tekSaveGameData[_tekSaveGameData.Length-1].SetSaveGameData (1);
 		}
 
 		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _tekSaveGameData);
