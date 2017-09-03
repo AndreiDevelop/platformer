@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectRepeat : MonoBehaviour {
+public class ObjectRepeat : MonoBehaviour 
+{
     private Rigidbody2D _tekHero;
     private Vector3 _defaultPosition;
+	private BoxCollider2D _boxCollider;
+	private Rigidbody2D _rigitbody;
 
 	// Use this for initialization
 	void Start () 
     {
         _defaultPosition = transform.position;
 		_tekHero = GameObject.Find(TagConstant.HERO).GetComponent<Rigidbody2D>();
+		_boxCollider = GetComponent<BoxCollider2D> ();
+		_rigitbody = GetComponent<Rigidbody2D> ();
 	}
 	// Update is called once per frame
 	void OnBecameInvisible () 
@@ -19,8 +24,8 @@ public class ObjectRepeat : MonoBehaviour {
         {
 			if (tag != TagConstant.COIN)
             {
-                GetComponent<BoxCollider2D>().isTrigger = false;
-                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+				_boxCollider.isTrigger = false;
+				_rigitbody.constraints = RigidbodyConstraints2D.FreezeAll;
             }
             else
                 gameObject.SetActive(true);

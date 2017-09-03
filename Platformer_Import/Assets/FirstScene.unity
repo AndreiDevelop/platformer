@@ -411,7 +411,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1000011460583444, guid: 33c9ae46cf041c14db2686c87d16ee8a, type: 2}
   _countObjectsInPool: 50
-  _referenceToAllObjectsBeenInPool: []
 --- !u!4 &51410119
 Transform:
   m_ObjectHideFlags: 0
@@ -578,8 +577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18239c8a0ea94f4428c46a636839f060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  koefForGeneratePointsMap: {x: 5, y: 1.5}
   pointMapSize: {x: 10, y: 5}
+  _koefForGeneratePointsMap: {x: 5, y: 1.5}
 --- !u!1 &143094225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,7 +1503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1000010788818094, guid: 76ce99d8cdc35a648a7369dffd0718b7, type: 2}
   _countObjectsInPool: 20
-  _referenceToAllObjectsBeenInPool: []
 --- !u!1 &904587883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,12 +1685,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987fd945617c23a4d9ffc8a762adf965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolManagerCoin: {fileID: 51410118}
-  poolManagerPlatformNormal: {fileID: 802662522}
-  poolManagerPlatformOnceJump: {fileID: 1625847834}
-  poolManagerPlatformTwoJump: {fileID: 1342343017}
-  pointMapForPlatform: {fileID: 112059597}
-  pointMapForCoin: {fileID: 1129740586}
+  _poolManagerCoin: {fileID: 51410118}
+  _poolManagerPlatformNormal: {fileID: 802662522}
+  _poolManagerPlatformOnceJump: {fileID: 1625847834}
+  _poolManagerPlatformTwoJump: {fileID: 1342343017}
+  _pointMapForPlatform: {fileID: 112059597}
+  _pointMapForCoin: {fileID: 1129740586}
 --- !u!4 &960108466
 Transform:
   m_ObjectHideFlags: 0
@@ -1931,7 +1929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950a3f1e5bd68a041aada45d8d4e9444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  _speed: 5
 --- !u!1 &1059985393
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,8 +2255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18239c8a0ea94f4428c46a636839f060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  koefForGeneratePointsMap: {x: 2, y: 1.5}
   pointMapSize: {x: 10, y: 5}
+  _koefForGeneratePointsMap: {x: 2, y: 1.5}
 --- !u!1 &1259370429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,7 +2438,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1000010925217944, guid: 5a085df512285ee439637fc94efb1e00, type: 2}
   _countObjectsInPool: 20
-  _referenceToAllObjectsBeenInPool: []
 --- !u!1 &1368179553
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,7 +2893,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1000013142651128, guid: 3a8d8d82c548f8a41bba21de9f373e7d, type: 2}
   _countObjectsInPool: 20
-  _referenceToAllObjectsBeenInPool: []
 --- !u!1 &1651435237
 GameObject:
   m_ObjectHideFlags: 0

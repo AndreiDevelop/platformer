@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PoolManager : MonoBehaviour 
 { 
+	private GameObject []_referenceToAllObjectsBeenInPool;
     private List<GameObject> _poolObjectsList;//список текущих объектов в пуле  
 
     [SerializeField]
@@ -30,12 +31,13 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public GameObject []_referenceToAllObjectsBeenInPool;
+	private Transform _currentTransform;
 
     void Awake()
     {
         _poolObjectsList = new List<GameObject>();
         _referenceToAllObjectsBeenInPool = new GameObject[_countObjectsInPool];
+		_currentTransform = transform;
         FillPool();
     }
 
@@ -71,7 +73,7 @@ public class PoolManager : MonoBehaviour
         {
             for (int i = 0; i < _countObjectsInPool; i++)
             {
-                GameObject bufPref = (GameObject)Instantiate(_prefab, transform.position, Quaternion.identity, transform);
+				GameObject bufPref = (GameObject)Instantiate(_prefab, _currentTransform.position, Quaternion.identity, _currentTransform);
                 _referenceToAllObjectsBeenInPool[i] = bufPref;
                 PushToPool(bufPref);
             }

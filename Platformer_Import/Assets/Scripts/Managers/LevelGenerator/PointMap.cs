@@ -1,39 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum PointState 
+public class PointMap : MonoBehaviour 
 {
-    None,
-    Empty,
-    Else
-}
-
-public class Point : MonoBehaviour
-{
-    public int state;
-
-    void OnEnable()
-    {
-        state = (int)PointState.Empty;
-    }
-}
-
-public class PointMap : MonoBehaviour {
-
-    public Vector2 koefForGeneratePointsMap;
     public Vector2 pointMapSize;
     public GameObject[,] map;
+
+	[SerializeField]
+	private Vector2 _koefForGeneratePointsMap;
+
+	private Transform _currentTransform;
 	// Use this for initialization
-	void Start () 
+	void Awake () 
     {
+		_currentTransform = transform;
         map = new GameObject[(int)pointMapSize.x, (int)pointMapSize.y];
-        GeneratePointsMap(koefForGeneratePointsMap.x, koefForGeneratePointsMap.y);
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	
+        GeneratePointsMap(_koefForGeneratePointsMap.x, _koefForGeneratePointsMap.y);
 	}
 
     //генерируем карту точек
@@ -44,18 +26,16 @@ public class PointMap : MonoBehaviour {
         {
             for (int j = 0; j < pointMapSize.y; j++)
             {
-                Vector3 newPos = new Vector3(transform.position.x+(float)i * a, transform.position.y+(float)j * b, 0f);
-                map[i, j] = (GameObject)Instantiate(tempGameObject, newPos, Quaternion.identity, transform);
-
-                map[i, j].AddComponent<Point>();
+				Vector3 newPos = new Vector3(_currentTransform.position.x+(float)i * a, _currentTransform.position.y+(float)j * b, 0f);
+				map[i, j] = (GameObject)Instantiate(tempGameObject, newPos, Quaternion.identity, _currentTransform);
             }       
         }
         Destroy(tempGameObject);
     }
 
-    void OnDrawGizmos()
-    {
-        foreach(Transform wayPoint in transform)
-            Gizmos.DrawSphere(wayPoint.position, 0.3f);
-    }
+//    void OnDrawGizmos()
+//    {
+//		foreach(Transform wayPoint in _currentTransform)
+//            Gizmos.DrawSphere(wayPoint.position, 0.3f);
+//    }
 }

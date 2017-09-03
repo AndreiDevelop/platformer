@@ -10,18 +10,20 @@ public class HeroMove : MonoBehaviour, IMove
 
     public GlobalController _moveControll;
 
-    private Rigidbody2D _tekRigitBody;
+	private Rigidbody2D _currentRigitBody;
     private bool _onGround;
     private float _heroRadius;
     private Vector2 _startHeroPos;
+	private Transform _currentTransform;
 	// Use this for initialization
 	void Start () 
     {
         _moveControll = GameObject.FindObjectOfType<GlobalController>();
 
-        _tekRigitBody = GetComponent<Rigidbody2D>();
+        _currentRigitBody = GetComponent<Rigidbody2D>();
         _heroRadius = GetComponent<CircleCollider2D>().radius;
         _startHeroPos = new Vector2(transform.position.x, transform.position.y);
+		_currentTransform = transform;
 	}
 	
 	// Update is called once per frame
@@ -44,41 +46,41 @@ public class HeroMove : MonoBehaviour, IMove
 
     public void MoveLeft()
     {
-        _tekRigitBody.AddForce(new Vector2(-speed, 0f));
+        _currentRigitBody.AddForce(new Vector2(-speed, 0f));
     }
 
     public void MoveRight()
     {
-        _tekRigitBody.AddForce(new Vector2(speed, 0f));
+        _currentRigitBody.AddForce(new Vector2(speed, 0f));
     }
 
     public void MoveUp()
     {
-        _tekRigitBody.AddForce(new Vector2(0f, jumpForce));
+        _currentRigitBody.AddForce(new Vector2(0f, jumpForce));
 
-        _tekRigitBody.velocity=new Vector2(_tekRigitBody.velocity.x,
-                Mathf.Clamp(_tekRigitBody.velocity.y,0f,7f));
+        _currentRigitBody.velocity=new Vector2(_currentRigitBody.velocity.x,
+                Mathf.Clamp(_currentRigitBody.velocity.y,0f,7f));
     }
 
 
     void GroundCheckFunction()
     {
         //касаемся ли земли
-        _onGround = Physics2D.OverlapCircle(transform.position, _heroRadius, whatIsGround);
+		_onGround = Physics2D.OverlapCircle(_currentTransform.position, _heroRadius, whatIsGround);
     }
 
     public void ResetHeroMoveAndPosition()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().angularVelocity = 0f;
-        transform.position = new Vector3(_startHeroPos.x, _startHeroPos.y, transform.position.z);
+		_currentRigitBody.velocity = Vector2.zero;
+		_currentRigitBody.angularVelocity = 0f;
+		_currentTransform.position = new Vector3(_startHeroPos.x, _startHeroPos.y, _currentTransform.position.z);
     }
 
     public void Freeze(bool freeze)
     {
         if (freeze)
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+			_currentRigitBody.constraints = RigidbodyConstraints2D.FreezeAll;
         else
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+			_currentRigitBody.constraints = RigidbodyConstraints2D.None;
     }
 }

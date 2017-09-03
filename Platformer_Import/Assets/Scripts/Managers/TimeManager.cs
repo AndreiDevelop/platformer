@@ -6,8 +6,8 @@ public class TimeManager : MonoBehaviour
 	public delegate void UpdateTime();
 	public static event UpdateTime OnUpdateTime;
 
-    private int _timeInSecondsSinceGameStart;
-	public int TimeInSecondsSinceStartGame
+    private static int _timeInSecondsSinceGameStart;
+	public static int TimeInSecondsSinceStartGame
 	{
 		get 
 		{

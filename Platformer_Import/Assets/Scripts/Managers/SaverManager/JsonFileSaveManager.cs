@@ -47,7 +47,7 @@ public class SaveGameData
 		}
 
 		score.Add (ScoreManager.TekScore);
-		timeInSeconds.Add (GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame);
+		timeInSeconds.Add (TimeManager.TimeInSecondsSinceStartGame);
 
 		if (OnChangeGameCount != null)
 			OnChangeGameCount ();

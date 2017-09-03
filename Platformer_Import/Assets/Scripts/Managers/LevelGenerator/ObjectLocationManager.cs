@@ -3,25 +3,30 @@ using System.Collections;
 
 public class ObjectLocationManager : MonoBehaviour 
 {
-    public PoolManager poolManagerCoin;
+	[SerializeField]
+    private PoolManager _poolManagerCoin;
 
-    public PoolManager poolManagerPlatformNormal;
-    public PoolManager poolManagerPlatformOnceJump;
-    public PoolManager poolManagerPlatformTwoJump;
+	[SerializeField]
+    private PoolManager _poolManagerPlatformNormal;
 
-    public PointMap pointMapForPlatform;
-    public PointMap pointMapForCoin;
+	[SerializeField]
+    private PoolManager _poolManagerPlatformOnceJump;
+
+	[SerializeField]
+    private PoolManager _poolManagerPlatformTwoJump;
+
+	[SerializeField]
+    private PointMap _pointMapForPlatform;
+
+	[SerializeField]
+	private PointMap _pointMapForCoin;
+
+	private Transform _bufTransform;
 
     void Start()
     {
         CreateLevelCoin();
         CreateLevelPlatform();
-       
-    }
-	
-    void Update()
-    {
-        
     }
 
     void InstanceObjectFromPool(PoolManager pool, Vector2 newPos)
@@ -38,21 +43,23 @@ public class ObjectLocationManager : MonoBehaviour
 
     void CreateLevelPlatform()
     {
-        for (int i = 0; i < pointMapForPlatform.pointMapSize.x; i++)
+        for (int i = 0; i < _pointMapForPlatform.pointMapSize.x; i++)
         {
-            for (int j = 0; j < pointMapForPlatform.pointMapSize.y; j++)
+            for (int j = 0; j < _pointMapForPlatform.pointMapSize.y; j++)
             {
+				_bufTransform = _pointMapForPlatform.map [i, j].transform;
+
                 InstanceObjectFromPool(PoolObjectChoicerPlatform(),
-                    new Vector2(pointMapForPlatform.map[i,j].transform.position.x, pointMapForPlatform.map[i,j].transform.position.y));
+					new Vector2(_bufTransform.position.x, _bufTransform.position.y));
             }
         }
     }
 
     void CreateLevelCoin()
     {
-        for (int i = 0; i < pointMapForCoin.pointMapSize.x; i++)
+        for (int i = 0; i < _pointMapForCoin.pointMapSize.x; i++)
         {
-            for (int j = 0; j < pointMapForCoin.pointMapSize.y; j++)
+            for (int j = 0; j < _pointMapForCoin.pointMapSize.y; j++)
             {
                 InstanceObjectFromPool(PoolObjectChoicerCoin(),
                     new Vector2(Random.Range(-30f,30f), Random.Range(-3f,3f)));
@@ -68,10 +75,10 @@ public class ObjectLocationManager : MonoBehaviour
         if (rand >= 50)
         {
             if (rand <= 80)
-                return poolManagerPlatformNormal;
+                return _poolManagerPlatformNormal;
             else if (rand <= 90)
-                return poolManagerPlatformOnceJump;
-            return poolManagerPlatformTwoJump;
+                return _poolManagerPlatformOnceJump;
+            return _poolManagerPlatformTwoJump;
         }
         return null;
     }
@@ -81,7 +88,7 @@ public class ObjectLocationManager : MonoBehaviour
         int rand = Random.Range(0, 100);
 
         if(rand >= 40)
-            return poolManagerCoin;
+            return _poolManagerCoin;
         return null;
     }
 }
