@@ -8,7 +8,18 @@ public class SaveGameData
 	public delegate void ChangeGameCount();
 	public static event ChangeGameCount OnChangeGameCount;
 
-	public static int currentGameCount;		//текущее количество сыгранных игр
+	private static int _currentGameCount;		//текущее количество сыгранных игр
+	public static int CurrentGameCount
+	{
+		get 
+		{
+			return _currentGameCount;
+		}
+		private set 
+		{
+			_currentGameCount = value;
+		}
+	}
 
 	public List<int> gameCount;				//количество сыгранных игр
 	public List<int> score;					//счет в игре
@@ -23,6 +34,7 @@ public class SaveGameData
 		if (buf == null) 
 		{
 			gameCount.Add (1);
+			CurrentGameCount = 1;
 		} 
 		else 
 		{
@@ -31,6 +43,7 @@ public class SaveGameData
 			timeInSeconds.AddRange (buf.timeInSeconds);
 
 			gameCount.Add (++buf.gameCount[buf.gameCount.Count - 1]);
+			CurrentGameCount = ++buf.gameCount [buf.gameCount.Count - 1];
 		}
 
 		score.Add (ScoreManager.TekScore);
@@ -57,8 +70,10 @@ public class JsonFileSaveManager: MonoBehaviour
 
 	public void SaveProgress()
 	{
+		//если сохранения существуют
 		if (File.Exists(_fileDataPath)) 
 		{
+			//считываем сохранения
 			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _currentSaveGameData);
 
 			_newSaveGameData.SetSaveGameData (_currentSaveGameData);
@@ -68,9 +83,7 @@ public class JsonFileSaveManager: MonoBehaviour
 			_newSaveGameData.SetSaveGameData (_currentSaveGameData);
 		}
 
-//		_tekSaveGameData.SetSaveGameData (1);
-//		Debug.Log ("SAVE DATA " + _tekSaveGameData.gameCount[0] + " " + _tekSaveGameData.score[0] + " " + _tekSaveGameData.timeInSeconds[0]);
-
+		//записываем сохранения
 		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _newSaveGameData);
 	}
 }
