@@ -3,13 +3,16 @@ using System.Collections;
 
 public class GameProcessManager : MonoBehaviour 
 {
-
 	private TimeManager _timeManager;
-	public TimeManager timeManager
+	public TimeManager TimeManager
 	{
 		get
 		{
 			return _timeManager;
+		}
+		private set 
+		{
+			_timeManager = (value != null) ? value : GameObject.FindObjectOfType<TimeManager>();
 		}
 	}
 
@@ -29,7 +32,7 @@ public class GameProcessManager : MonoBehaviour
         _popAnim = GameObject.FindObjectOfType<PopUpAnimation>();
 
         //получаем счетчик времени
-        _timeManager = GameObject.FindObjectOfType<TimeManager>();
+        TimeManager = GameObject.FindObjectOfType<TimeManager>();
 
 		_saveInFileManager = GameObject.FindObjectOfType<JsonFileSaveManager> ();
 	}
@@ -49,17 +52,17 @@ public class GameProcessManager : MonoBehaviour
 
     void ResetTime()
     {
-        _timeManager.ResetTimeCounter();
+        TimeManager.ResetTimeCounter();
     }
 
     void StopTime()
     {
-        _timeManager.StorTimeCounter();
+        TimeManager.StorTimeCounter();
     }
 
     void ContinueTime()
     {
-        _timeManager.ContinueTimeCounter();
+        TimeManager.ContinueTimeCounter();
     }
 
     #endregion
