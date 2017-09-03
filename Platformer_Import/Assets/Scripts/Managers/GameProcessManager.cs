@@ -82,7 +82,7 @@ public class GameProcessManager : MonoBehaviour
         _hero.Freeze(false);
          ResetTime();
          ContinueTime();
-        ScoreManager.Instance.TekScore = 0;
+        ScoreManager.TekScore = 0;
         _moveControll.enabled = true;
         _popAnim.HideGameOverPopUp();
 

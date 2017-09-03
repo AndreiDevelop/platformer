@@ -23,6 +23,6 @@ public class ScoreGameUI : MonoBehaviour
 
 	void UpdateScore()
 	{
-		_tekTMP.text = ScoreManager.Instance.TekScore.ToString();
+		_tekTMP.text = ScoreManager.TekScore.ToString();
 	}
 }

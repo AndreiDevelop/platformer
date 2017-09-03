@@ -9,7 +9,7 @@ public class Platform : MonoBehaviour
     {
         if (col.gameObject.tag == "Hero")
         {
-            ScoreManager.Instance.TekScore += _scoreForJump;
+            ScoreManager.TekScore += _scoreForJump;
         }
     }
 }

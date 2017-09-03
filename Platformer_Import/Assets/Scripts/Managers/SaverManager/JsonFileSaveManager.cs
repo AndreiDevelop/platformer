@@ -8,9 +8,11 @@ public class SaveGameData
 	public delegate void ChangeGameCount();
 	public static event ChangeGameCount OnChangeGameCount;
 
-	public List<int> gameCount;			//количество сыгранных игр
-	public List<int> score;				//счет в игре
-	public List<int> timeInSeconds;		//время игры в секундах
+	public static int currentGameCount;		//текущее количество сыгранных игр
+
+	public List<int> gameCount;				//количество сыгранных игр
+	public List<int> score;					//счет в игре
+	public List<int> timeInSeconds;			//время игры в секундах
 
 	public void SetSaveGameData(SaveGameData buf)
 	{
@@ -31,7 +33,7 @@ public class SaveGameData
 			gameCount.Add (++buf.gameCount[buf.gameCount.Count - 1]);
 		}
 
-		score.Add (ScoreManager.Instance.TekScore);
+		score.Add (ScoreManager.TekScore);
 		timeInSeconds.Add (GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame);
 
 		if (OnChangeGameCount != null)
