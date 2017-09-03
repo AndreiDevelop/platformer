@@ -1,34 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
-using System;
-using System.Runtime.Serialization;
-
-[DataContract]
 struct SaveGameData
 {
-	[DataMemberAttribute]
-	public int gameCount;
+	public delegate void ChangeGameCount();
+	public static event ChangeGameCount OnChangeGameCount;
 
-	[DataMemberAttribute]
-	public int score;
+	public List<int> gameCount;
+	public List<int> score;
+	public List<int> timeInSeconds;
 
-	[DataMemberAttribute]
-	public int timeInSeconds;
-
-	public void SetSaveGameData(int tekGameCount)
+	public void SetSaveGameData(int currentGameCount)
 	{
-		gameCount = tekGameCount;
-		score = GameObject.FindObjectOfType<ScoreManager> ().TekScore;
-		timeInSeconds = GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame;
+		if (currentGameCount == 1) 
+		{
+			gameCount = new List<int> ();
+			score = new List<int> ();
+			timeInSeconds = new List<int> ();
+		}
+
+		gameCount.Add(currentGameCount);
+		score.Add(ScoreManager.Instance.TekScore);
+		timeInSeconds.Add(GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame);
+
+		if (OnChangeGameCount != null)
+			OnChangeGameCount ();
 	}
 }
 
 public class JsonFileSaveManager: MonoBehaviour 
 {
     private string _fileDataPath=string.Empty;
-	private SaveGameData []_tekSaveGameData;
+	private SaveGameData _tekSaveGameData;
 
 	void Start () 
     {
@@ -37,17 +42,20 @@ public class JsonFileSaveManager: MonoBehaviour
 
 	public void SaveProgress()
 	{
-		if (File.Exists(_fileDataPath)) 
-		{
-			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _tekSaveGameData);
+//		if (File.Exists(_fileDataPath)) 
+//		{
+//			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _tekSaveGameData);
+//
+//			_tekSaveGameData.SetSaveGameData (++_tekSaveGameData.gameCount[_tekSaveGameData.gameCount.Count - 1]);
+//		} 
+//		else 
+//		{
+//			_tekSaveGameData.SetSaveGameData (1);
+//		}
+//
+//		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _tekSaveGameData);
 
-			_tekSaveGameData[_tekSaveGameData.Length-1].SetSaveGameData (++_tekSaveGameData[_tekSaveGameData.Length-1].gameCount);
-		} 
-		else 
-		{
-			_tekSaveGameData[_tekSaveGameData.Length-1].SetSaveGameData (1);
-		}
-
-		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _tekSaveGameData);
+		_tekSaveGameData.SetSaveGameData (1);
+		Debug.Log ("SAVE DATA" + _tekSaveGameData.gameCount[0] + _tekSaveGameData.score[0] + _tekSaveGameData.timeInSeconds[0]);
 	}
 }

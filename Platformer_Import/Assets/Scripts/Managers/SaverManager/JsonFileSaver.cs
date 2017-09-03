@@ -27,19 +27,19 @@ public class JsonFileSaver<T>
 //			Debug.Log("File dont exist");
 //		}
 //	}
-		public static void putToFile(string fileDataPathWrite, T []saveObject)
+		public static void putToFile(string fileDataPathWrite, T saveObject)
 		{
-				string bufString = JsonUtility.ToJson(saveObject);  
-				File.AppendAllText(fileDataPathWrite,bufString);
+			string bufString = JsonUtility.ToJson(saveObject);  
+			File.WriteAllText(fileDataPathWrite,bufString);
 		}
 
-		public static void getFromFile(string fileDataPathRead,ref T []newObj)
+		public static void getFromFile(string fileDataPathRead,ref T newObj)
 		{
 			if (File.Exists(fileDataPathRead))
 			{
 				string bufString = File.ReadAllText(fileDataPathRead);
 	
-				newObj = JsonUtility.FromJson<T[]>(bufString);
+				newObj = JsonUtility.FromJson<T>(bufString);
 				//JsonUtility.FromJsonOverwrite(bufString, newObj); 
 			}
 			else

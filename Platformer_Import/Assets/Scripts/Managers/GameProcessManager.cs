@@ -13,15 +13,6 @@ public class GameProcessManager : MonoBehaviour
 		}
 	}
 
-	private ScoreManager _scoreManager;
-	public ScoreManager scoreManager
-	{
-		get 
-		{
-			return _scoreManager;
-		}
-	}
-
     private PopUpAnimation _popAnim;
     private HeroMove _hero;
 	private GlobalController _moveControll;
@@ -39,9 +30,6 @@ public class GameProcessManager : MonoBehaviour
 
         //получаем счетчик времени
         _timeManager = GameObject.FindObjectOfType<TimeManager>();
-
-        //получаем менеджер счетчика
-        _scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 
 		_saveInFileManager = GameObject.FindObjectOfType<JsonFileSaveManager> ();
 	}
@@ -91,7 +79,7 @@ public class GameProcessManager : MonoBehaviour
         _hero.Freeze(false);
          ResetTime();
          ContinueTime();
-        _scoreManager.TekScore = 0;
+        ScoreManager.Instance.TekScore = 0;
         _moveControll.enabled = true;
         _popAnim.HideGameOverPopUp();
 

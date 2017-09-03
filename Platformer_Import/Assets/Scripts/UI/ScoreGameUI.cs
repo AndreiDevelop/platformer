@@ -6,8 +6,6 @@ public class ScoreGameUI : MonoBehaviour
 {
     private TextMeshProUGUI _tekTMP;
 
-    private ScoreManager _scoreManager;
-
 	void OnEnable()
 	{
 		ScoreManager.OnUpdateScore += UpdateScore;
@@ -21,11 +19,10 @@ public class ScoreGameUI : MonoBehaviour
 	void Start () 
     {
         _tekTMP = GetComponent<TextMeshProUGUI>();
-        _scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 	}
 
 	void UpdateScore()
 	{
-		_tekTMP.text = _scoreManager.TekScore.ToString();
+		_tekTMP.text = ScoreManager.Instance.TekScore.ToString();
 	}
 }
