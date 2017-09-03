@@ -3,27 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-struct SaveGameData
+public class SaveGameData
 {
 	public delegate void ChangeGameCount();
 	public static event ChangeGameCount OnChangeGameCount;
 
-	public List<int> gameCount;
-	public List<int> score;
-	public List<int> timeInSeconds;
+	public List<int> gameCount;			//количество сыгранных игр
+	public List<int> score;				//счет в игре
+	public List<int> timeInSeconds;		//время игры в секундах
 
-	public void SetSaveGameData(int currentGameCount)
+	public void SetSaveGameData(SaveGameData buf)
 	{
-		if (currentGameCount == 1) 
+		gameCount = new List<int> ();
+		score = new List<int> ();
+		timeInSeconds = new List<int> ();
+
+		if (buf == null) 
 		{
-			gameCount = new List<int> ();
-			score = new List<int> ();
-			timeInSeconds = new List<int> ();
+			gameCount.Add (1);
+		} 
+		else 
+		{
+			gameCount.AddRange (buf.gameCount);
+			score.AddRange (buf.score);
+			timeInSeconds.AddRange (buf.timeInSeconds);
+
+			gameCount.Add (++buf.gameCount[buf.gameCount.Count - 1]);
 		}
 
-		gameCount.Add(currentGameCount);
-		score.Add(ScoreManager.Instance.TekScore);
-		timeInSeconds.Add(GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame);
+		score.Add (ScoreManager.Instance.TekScore);
+		timeInSeconds.Add (GameObject.FindObjectOfType<TimeManager> ().TimeInSecondsSinceStartGame);
 
 		if (OnChangeGameCount != null)
 			OnChangeGameCount ();
@@ -33,29 +42,33 @@ struct SaveGameData
 public class JsonFileSaveManager: MonoBehaviour 
 {
     private string _fileDataPath=string.Empty;
-	private SaveGameData _tekSaveGameData;
+	private SaveGameData _currentSaveGameData;
+	private SaveGameData _newSaveGameData;
 
 	void Start () 
     {
-        _fileDataPath = Application.streamingAssetsPath+"SaveJSON.json";  	
+        _fileDataPath = Application.streamingAssetsPath+"SaveJSON.json";  
+
+		_currentSaveGameData = new SaveGameData ();
+		_newSaveGameData = new SaveGameData ();
     }
 
 	public void SaveProgress()
 	{
-//		if (File.Exists(_fileDataPath)) 
-//		{
-//			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _tekSaveGameData);
-//
-//			_tekSaveGameData.SetSaveGameData (++_tekSaveGameData.gameCount[_tekSaveGameData.gameCount.Count - 1]);
-//		} 
-//		else 
-//		{
-//			_tekSaveGameData.SetSaveGameData (1);
-//		}
-//
-//		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _tekSaveGameData);
+		if (File.Exists(_fileDataPath)) 
+		{
+			JsonFileSaver<SaveGameData>.getFromFile (_fileDataPath, ref _currentSaveGameData);
 
-		_tekSaveGameData.SetSaveGameData (1);
-		Debug.Log ("SAVE DATA" + _tekSaveGameData.gameCount[0] + _tekSaveGameData.score[0] + _tekSaveGameData.timeInSeconds[0]);
+			_newSaveGameData.SetSaveGameData (_currentSaveGameData);
+		} 
+		else 
+		{
+			_newSaveGameData.SetSaveGameData (_currentSaveGameData);
+		}
+
+//		_tekSaveGameData.SetSaveGameData (1);
+//		Debug.Log ("SAVE DATA " + _tekSaveGameData.gameCount[0] + " " + _tekSaveGameData.score[0] + " " + _tekSaveGameData.timeInSeconds[0]);
+
+		JsonFileSaver<SaveGameData>.putToFile (_fileDataPath, _newSaveGameData);
 	}
 }
