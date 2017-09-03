@@ -3,6 +3,9 @@ using System.Collections;
 
 public class TimeManager : MonoBehaviour 
 {
+	public delegate void UpdateTime();
+	public static event UpdateTime OnUpdateTime;
+
     private int _timeInSecondsSinceGameStart;
 	public int TimeInSecondsSinceStartGame
 	{
@@ -10,23 +13,28 @@ public class TimeManager : MonoBehaviour
 		{
 			return _timeInSecondsSinceGameStart;
 		}
+		private set 
+		{
+			_timeInSecondsSinceGameStart = (value >= 0) ? value : 0;
+
+			if (OnUpdateTime != null)
+				OnUpdateTime ();
+		}
 	}
 
-    private int _minutes;
     public int Minutes
     {
         get
         {
-            return _minutes;
+			return TimeInSecondsSinceStartGame / 60;
         }
     }
         
-    private int _seconds;
     public int Seconds
     {
         get
         {
-            return _seconds;
+			return TimeInSecondsSinceStartGame % 60;
         }
     }
 
@@ -34,21 +42,8 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-        _timeInSecondsSinceGameStart = 0;
+		TimeInSecondsSinceStartGame = 0;
         StartTimeCounter();
-    }
-
-	// Update is called once per frame
-	void Update () 
-    {
-        if (_timerActive)
-            timer();
-	}
-
-    void timer()
-    {
-        _seconds = (int)(_timeInSecondsSinceGameStart % 60f);
-        _minutes = (int)(_timeInSecondsSinceGameStart / 60f);
     }
 
     public void StartTimeCounter()
@@ -61,14 +56,14 @@ public class TimeManager : MonoBehaviour
     {
         while (_timerActive)
         {
-            yield return new WaitForSeconds(1f);
-            _timeInSecondsSinceGameStart++;
+            yield return new WaitForSeconds(1);
+			TimeInSecondsSinceStartGame++;
         }
     }
 
     public void ResetTimeCounter()
     {
-        _timeInSecondsSinceGameStart = 0;
+		TimeInSecondsSinceStartGame = 0;
     }
 
     public void StorTimeCounter()

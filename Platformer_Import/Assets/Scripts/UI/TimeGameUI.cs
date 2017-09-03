@@ -7,7 +7,15 @@ public class TimeGameUI : MonoBehaviour
     private TextMeshProUGUI _tekTMP;
     private TimeManager _gameTime;
 
-    public int seconds;
+	void OnEnable()
+	{
+		TimeManager.OnUpdateTime += UpdateTime;
+	}
+
+	void OnDisable()
+	{
+		TimeManager.OnUpdateTime -= UpdateTime;
+	}
 
 	// Use this for initialization
 	void Start () 
@@ -17,7 +25,7 @@ public class TimeGameUI : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void UpdateTime () 
     {
         _tekTMP.text = _gameTime.Minutes.ToString("0#") + ":" + _gameTime.Seconds.ToString("0#");
 	}
