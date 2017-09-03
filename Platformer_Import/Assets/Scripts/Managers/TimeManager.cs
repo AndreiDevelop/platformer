@@ -26,7 +26,7 @@ public class TimeManager : MonoBehaviour
     {
         get
         {
-			return (TimeInSecondsSinceStartGame != null) ? (TimeInSecondsSinceStartGame / 60) : 0;
+			return TimeInSecondsSinceStartGame / 60;
         }
     }
         
@@ -34,7 +34,7 @@ public class TimeManager : MonoBehaviour
     {
         get
         {
-			return (TimeInSecondsSinceStartGame != null) ? (TimeInSecondsSinceStartGame % 60) : 0;
+			return TimeInSecondsSinceStartGame % 60;
         }
     }
 

@@ -9,12 +9,12 @@ public class TimeGameUI : MonoBehaviour
 
 	void OnEnable()
 	{
-		TimeManager.OnUpdateTime += UpdateTime;
+		TimeManager.OnUpdateTime += UpdateTimeFunk;
 	}
 
 	void OnDisable()
 	{
-		TimeManager.OnUpdateTime -= UpdateTime;
+		TimeManager.OnUpdateTime -= UpdateTimeFunk;
 	}
 
 	// Use this for initialization
@@ -25,9 +25,8 @@ public class TimeGameUI : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void UpdateTime () 
+	void UpdateTimeFunk () 
     {
-		if (_gameTime != null)
-			_tekTMP.text = _gameTime.Minutes.ToString ("0#") + ":" + _gameTime.Seconds.ToString ("0#");
+		_tekTMP.text = _gameTime.Minutes.ToString ("0#") + ":" + _gameTime.Seconds.ToString ("0#");
 	}
 }
