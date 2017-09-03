@@ -8,16 +8,24 @@ public class ScoreGameUI : MonoBehaviour
 
     private ScoreManager _scoreManager;
 
+	void OnEnable()
+	{
+		ScoreManager.OnUpdateScore += UpdateScore;
+	}
+
+	void OnDisable()
+	{
+		ScoreManager.OnUpdateScore -= UpdateScore;
+	}
 	// Use this for initialization
 	void Start () 
     {
         _tekTMP = GetComponent<TextMeshProUGUI>();
         _scoreManager = GameObject.FindObjectOfType<ScoreManager>();
 	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        _tekTMP.text = _scoreManager.TekScore.ToString();
+
+	void UpdateScore()
+	{
+		_tekTMP.text = _scoreManager.TekScore.ToString();
 	}
 }
