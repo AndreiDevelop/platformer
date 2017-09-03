@@ -28,7 +28,7 @@ public class PoolObject : MonoBehaviour
     {
         _tekObject = transform.GetChild(0).gameObject;
 
-        if(transform.GetChild(0).gameObject.tag == "Coin")
+		if(transform.GetChild(0).gameObject.tag == TagConstant.COIN)
             transform.GetChild(0).GetComponent<BoxCollider2D>().isTrigger = true;
     }
 

@@ -23,7 +23,7 @@ public class GameProcessManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        _hero = GameObject.FindWithTag("Hero").GetComponent<HeroMove>();
+		_hero = GameObject.FindWithTag(TagConstant.HERO).GetComponent<HeroMove>();
 
         //получаем контроллеры
         _moveControll = GameObject.FindObjectOfType<GlobalController>();
@@ -40,7 +40,7 @@ public class GameProcessManager : MonoBehaviour
 	// Update is called once per frame
     void OnTriggerEnter2D(Collider2D col) 
     {
-        if (col.gameObject.tag == "Hero")
+		if (col.gameObject.tag == TagConstant.HERO)
         {
             _hero.ResetHeroMoveAndPosition();
             _hero.Freeze(true);

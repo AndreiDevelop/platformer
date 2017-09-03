@@ -7,7 +7,7 @@ public class Platform : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Hero")
+		if (col.gameObject.tag == TagConstant.HERO)
         {
             ScoreManager.TekScore += _scoreForJump;
         }

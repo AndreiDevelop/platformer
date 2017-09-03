@@ -56,13 +56,15 @@ public class SaveGameData
 
 public class JsonFileSaveManager: MonoBehaviour 
 {
+	private const string CURRENT_FILE_NAME = "SaveJSON.json";
+
     private string _fileDataPath=string.Empty;
 	private SaveGameData _currentSaveGameData;
 	private SaveGameData _newSaveGameData;
 
 	void Start () 
     {
-        _fileDataPath = Application.streamingAssetsPath+"SaveJSON.json";  
+		_fileDataPath = Application.streamingAssetsPath + CURRENT_FILE_NAME;  
 
 		_currentSaveGameData = new SaveGameData ();
 		_newSaveGameData = new SaveGameData ();

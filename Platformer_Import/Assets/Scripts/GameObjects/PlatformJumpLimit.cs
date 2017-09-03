@@ -13,7 +13,7 @@ public class PlatformJumpLimit : Platform {
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Hero")
+		if (col.gameObject.tag == TagConstant.HERO)
         {
             jumpCounter--; 
             CheckJumpCounter();

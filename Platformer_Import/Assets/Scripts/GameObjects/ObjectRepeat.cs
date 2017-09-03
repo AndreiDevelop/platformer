@@ -9,7 +9,7 @@ public class ObjectRepeat : MonoBehaviour {
 	void Start () 
     {
         _defaultPosition = transform.position;
-        _tekHero = GameObject.Find("Hero").GetComponent<Rigidbody2D>();
+		_tekHero = GameObject.Find(TagConstant.HERO).GetComponent<Rigidbody2D>();
 	}
 	// Update is called once per frame
 	void OnBecameInvisible () 
@@ -17,7 +17,7 @@ public class ObjectRepeat : MonoBehaviour {
         //если игрок движеться вправо
         if (_tekHero.velocity.x > 0)
         {
-            if (tag != "Coin")
+			if (tag != TagConstant.COIN)
             {
                 GetComponent<BoxCollider2D>().isTrigger = false;
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
